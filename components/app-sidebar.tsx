@@ -1,5 +1,7 @@
 import * as React from "react"
 import { GalleryVerticalEnd, Minus, Plus } from "lucide-react"
+import ReddishLogo from '@/images/Reddish Logo Only.png';
+import ReddishFull from '@/images/Reddish Full.png';
 
 import { SearchForm } from "@/components/search-form"
 import {
@@ -20,6 +22,8 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import Image from "next/image"
+
 
 // This is sample data.
 const data = {
@@ -170,13 +174,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <GalleryVerticalEnd className="size-4" />
+                <div className="text-sidebar-primary-foreground flex aspect-square items-center justify-center rounded-lg">
+                <Image src={ReddishFull} alt="Logo" width={80} height={80} />
                 </div>
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-medium">Documentation</span>
-                  <span className="">v1.0.0</span>
-                </div>
+                {/* <div className="flex flex-col gap-0.5 leading-none">
+                  <span className="font-semibold text-xl" style={{color: "#e2643b"}}>Reddish</span>
+                  <span className=""></span>
+                </div> */}
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
