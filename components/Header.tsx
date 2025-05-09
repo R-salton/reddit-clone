@@ -29,7 +29,7 @@ const Header = () => {
         <div className="flex items-center gap-2">
 
         <MenuIcon className='h-6 w-6' onClick={toggleSidebar}  />
-        <Image src={ReddishFull} alt="Reddish Logo" className='hidden md:block' height={80} width={80} />  
+        <Image src={ReddishFull} alt="Reddish Logo" className='hidden md:block' height={80} width={80} />
         <Image src={ReddishText} alt="Reddish Logo" className='block md:hidden' height={40} width={40} />
         </div>
         
@@ -42,7 +42,7 @@ const Header = () => {
             <SignedOut>
                 <Button asChild variant="outline">
                     <SignInButton mode="modal" />
-                </Button>
+                </Button>   
             </SignedOut>
         </div>
 

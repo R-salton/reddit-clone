@@ -1,5 +1,5 @@
 import * as React from "react"
-import { GalleryVerticalEnd, Minus, Plus } from "lucide-react"
+import { FlameIcon, GalleryVerticalEnd, Home, Minus, Plus, TrendingUp } from "lucide-react"
 import ReddishLogo from '@/images/Reddish Logo Only.png';
 import ReddishFull from '@/images/Reddish Full.png';
 
@@ -23,148 +23,48 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Image from "next/image"
+import Link from "next/link";
 
+type sideBarData ={
+  navMain: 
+  {
+    title: string,
+    url: string,
+    items: {
+      title: string,
+      url: string,
+      isActive: boolean
+    }[];
+  }[];
+}
 
 // This is sample data.
-const data = {
+const sideBarData = {
   navMain: [
     {
-      title: "Getting Started",
+      title: "Communities",
       url: "#",
       items: [
         {
           title: "Installation",
           url: "#",
+          isActive: true ,
         },
         {
           title: "Project Structure",
           url: "#",
+          isActive: false,
         },
       ],
     },
-    {
-      title: "Building Your Application",
-      url: "#",
-      items: [
-        {
-          title: "Routing",
-          url: "#",
-        },
-        {
-          title: "Data Fetching",
-          url: "#",
-          isActive: true,
-        },
-        {
-          title: "Rendering",
-          url: "#",
-        },
-        {
-          title: "Caching",
-          url: "#",
-        },
-        {
-          title: "Styling",
-          url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
-        },
+    
       ],
-    },
-    {
-      title: "API Reference",
-      url: "#",
-      items: [
-        {
-          title: "Components",
-          url: "#",
-        },
-        {
-          title: "File Conventions",
-          url: "#",
-        },
-        {
-          title: "Functions",
-          url: "#",
-        },
-        {
-          title: "next.config.js Options",
-          url: "#",
-        },
-        {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Architecture",
-      url: "#",
-      items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Community",
-      url: "#",
-      items: [
-        {
-          title: "Contribution Guide",
-          url: "#",
-        },
-      ],
-    },
-  ],
-}
+    }
+    
+    
+    
+
+
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -175,7 +75,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="text-sidebar-primary-foreground flex aspect-square items-center justify-center rounded-lg">
+                <Link href="/">
                 <Image src={ReddishFull} alt="Logo" width={80} height={80} />
+                </Link>
                 </div>
                 {/* <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold text-xl" style={{color: "#e2643b"}}>Reddish</span>
@@ -190,7 +92,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {data.navMain.map((item, index) => (
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+               {/* TODO: add Community Button */}
+               {/* <CreateComunityButton /> */}
+              </SidebarMenuButton>
+              <SidebarMenuButton asChild>
+                <Link href="#">
+                  <Home className="mr-2 h-4 w-4" />
+                  <span>Home</span>
+                </Link>
+              </SidebarMenuButton>
+
+              <SidebarMenuButton asChild>
+                <Link href="#">
+                  <TrendingUp className="mr-2 h-4 w-4" />
+                  <span>Popular</span>
+                  </Link>
+              </SidebarMenuButton>
+              <SidebarMenuButton asChild>
+                <Link href="#">
+                  <FlameIcon className="mr-2 h-4 w-4" />
+                  <span>Hot/Cotrovetial</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarMenu>
+            {sideBarData.navMain.map((item, index) => (
               <Collapsible
                 key={item.title}
                 defaultOpen={index === 1}
