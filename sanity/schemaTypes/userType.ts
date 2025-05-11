@@ -24,29 +24,36 @@ export const userType = defineType({
       name: 'email',
       title: 'Email',
       type: 'string',
-      validation: Rule => Rule.required().required().error("Email is required")
+      validation: Rule => Rule.required().required().error("Email is required"),
     }),
     defineField({
       name: 'imageUrl',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
+      title: 'Image Url',
+      type: 'strinn',
+     description: "user Profile picture",
     }),
     defineField({
       name: 'joinedAt',
       title: 'Joined At',
       type: 'datetime',
-      description: "When user joined the platform"
+      description: "When user joined the platform",
       initialValue: () => Date().toISOString(),
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     }),
     defineField({
       name: 'isReported',
       title: 'Is Reported',
-      type: 'boolean',
-      initialValue: false
+      type: 'string',
+      description: "Indicates that this user has been reported",
+      option: {
+        list : [
+            {title: "No", balue: "yes" },
+            {title: "Yes", balue: "yes" },
+        ],
+        layout: "radio",
+      }
+      initialValue: "no",
     })
-  ]
+  ],
+  
 })
