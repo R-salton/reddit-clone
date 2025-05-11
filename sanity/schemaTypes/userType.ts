@@ -29,7 +29,7 @@ export const userType = defineType({
     defineField({
       name: 'imageUrl',
       title: 'Image Url',
-      type: 'strinn',
+      type: 'string',
      description: "user Profile picture",
     }),
     defineField({
@@ -37,22 +37,15 @@ export const userType = defineType({
       title: 'Joined At',
       type: 'datetime',
       description: "When user joined the platform",
-      initialValue: () => Date().toISOString(),
+      initialValue: () => new Date().toISOString(),
       validation: Rule => Rule.required(),
     }),
     defineField({
       name: 'isReported',
       title: 'Is Reported',
-      type: 'string',
+      type: 'boolean',
       description: "Indicates that this user has been reported",
-      option: {
-        list : [
-            {title: "No", balue: "yes" },
-            {title: "Yes", balue: "yes" },
-        ],
-        layout: "radio",
-      }
-      initialValue: "no",
+      initialValue: false,
     })
   ],
   
