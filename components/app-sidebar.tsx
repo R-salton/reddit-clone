@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/sidebar"
 import Image from "next/image"
 import Link from "next/link";
+import { getSubreddits } from "@/sanity/lib/subreddits/subReddits";
 
 type sideBarData ={
   navMain: 
@@ -66,7 +67,10 @@ const sideBarData = {
 
 
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const subreddits = await getSubreddits();
+
+  console.log(subreddits);
   return (
     <Sidebar {...props}>
       <SidebarHeader>
