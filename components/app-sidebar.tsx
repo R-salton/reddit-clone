@@ -40,28 +40,7 @@ type sideBarData ={
 }
 
 // This is sample data.
-const sideBarData = {
-  navMain: [
-    {
-      title: "Communities",
-      url: "#",
-      items: [
-        {
-          title: "Installation",
-          url: "#",
-          isActive: true ,
-        },
-        {
-          title: "Project Structure",
-          url: "#",
-          isActive: false,
-        },
-      ],
-    },
-    
-      ],
-    }
-    
+
     
     
 
@@ -70,7 +49,23 @@ const sideBarData = {
 export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const subreddits = await getSubreddits();
 
-  console.log(subreddits);
+  const sideBarData = {
+  navMain: [
+    {
+      title: "Communities",
+      url: "#",
+      items: subreddits.map((subreddit) => ({
+        title: subreddit.title,
+        url : `community/${subreddit.slug}`,
+        isActive: false
+      }))
+    },
+    
+      ],
+    }
+    
+
+ 
   return (
     <Sidebar {...props}>
       <SidebarHeader>
