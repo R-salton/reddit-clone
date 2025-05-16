@@ -2,13 +2,13 @@
 
 import React from 'react'
 import { SignedIn, UserButton, useUser, SignedOut, SignInButton } from '@clerk/nextjs'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import ReddishFull from '@/images/Reddish Full.png';
 import ReddishLogo from '@/images/Reddish Logo Only.png';
 import ReddishText from '@/images/Reddish Text Only.png';
 import Image from 'next/image';
 import { ArrowBigLeft, ChevronLeft, MenuIcon } from 'lucide-react';
-import { useSidebar } from './ui/sidebar';
+import { useSidebar } from '../ui/sidebar';
 
 
 const Header = () => {

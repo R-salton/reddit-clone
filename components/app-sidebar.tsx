@@ -25,6 +25,7 @@ import {
 import Image from "next/image"
 import Link from "next/link";
 import { getSubreddits } from "@/sanity/lib/subreddits/subReddits";
+import CreateCommunityButton from "@/components/Header/CreateCommunityButton";
 
 type sideBarData ={
   navMain: 
@@ -54,7 +55,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
     {
       title: "Communities",
       url: "#",
-      items: subreddits.map((subreddit) => ({
+      items: subreddits?.map((subreddit) => ({
         title: subreddit.title,
         url : `community/${subreddit.slug}`,
         isActive: false
@@ -95,6 +96,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
               <SidebarMenuButton asChild>
                {/* TODO: add Community Button */}
                {/* <CreateComunityButton /> */}
+               <CreateCommunityButton />
               </SidebarMenuButton>
               <SidebarMenuButton asChild>
                 <Link href="#">
