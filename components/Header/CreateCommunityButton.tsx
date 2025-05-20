@@ -15,7 +15,7 @@ import React from 'react'
   import { Input } from '@/components/ui/input';
   import { Label } from '@/components/ui/label';
   import {useUser} from '@clerk/nextjs';
-import { Plus, FileTextIcon } from 'lucide-react';  
+import { Plus, FileTextIcon, Router } from 'lucide-react';  
 import { useState,useTransition } from 'react';
 
 import Image from 'next/image';
@@ -34,6 +34,7 @@ const CreateCommunityButton = () => {
   const [imageFile,setImageFile] = useState<File | null>(null);
   const [isLoading,startTransition] = useTransition();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [open,setOpen] = useState(true);
 
 
    
@@ -68,6 +69,7 @@ const CreateCommunityButton = () => {
         const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           const file = e.target.files?.[0];
           if (file) {
+            setImageFile(file);
             const reader = new FileReader();
             reader.onload = () => {
               const result = reader.result as string;
@@ -78,6 +80,17 @@ const CreateCommunityButton = () => {
           }
         };
 
+        const resetForm = () => {
+          setName("");
+          setSlug("");
+          setDescription("");
+          setImagePreview(null);
+          setImageFile(null);
+          if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+          }
+        };
+         
 
       const handleCreateCommunity= async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -86,14 +99,63 @@ const CreateCommunityButton = () => {
           return;
         }
         
+        if(!slug.trim()){
+          setErrorMessage("Community slug is Required");
+          return;
+        }
 
-      }
+        setErrorMessage("");
+
+        startTransition( async() => {
+          try{
+            let imageBase64: string | null = null;
+            let fileName: string | null = null;
+            let fileType: string | null = null;
+
+            if(imageFile){
+              const reader = new FileReader();
+              imageBase64 = await new Promise<string>((resolve)=>{
+                reader.onload = () => resolve(reader.result as string);
+                reader.readAsDataURL(imageFile);
+              });
+              fileName = imageFile.name;
+              fileType = imageFile.type;
+              
+            }
+
+            const result = await createCommunity(
+              name.trim(),
+              imageBase64,
+              fileName,
+              fileType,
+              slug.trim(),
+              description.trim() || undefined
+            );
+
+            if("error" in result && result.error){
+              setErrorMessage(result.error);
+
+            } else if ("subreddit" in result && result.subreddit){
+              setOpen(false);
+              resetForm();
+
+              
+            }
+
+          }catch(error){
+            console.error("Failed to create community",error);
+            setErrorMessage("Failed to create community")
+          }
+
+        })
+
+      };
   
    
   return (
    
 
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className='w-full pl-5 p-2 flex items-center rounded-md cursor-pointer bg-black text-white  hover:bg-black transition-all duration-200 disabled:text-sm disabled:opacity-50 disabled:cursor-not-allowed' disabled={!user} asChild>
         <Button variant="outline">
         <Plus className="mr-2 h-4 w-4" />
@@ -138,7 +200,7 @@ const CreateCommunityButton = () => {
 
           {
             imagePreview ? (
-              <div className="relative w-24 mx-auto">
+              <div className="relative w-24 h-24 mx-auto">
                 <Image src={imagePreview} alt="Community preview" fill className="object-cover rounded-full" />
                 <button type="button" onClick={removeImage} className="absolute top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center">X</button>
 
