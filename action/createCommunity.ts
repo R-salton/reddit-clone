@@ -1,5 +1,8 @@
 'use server'
 
+import { createSubreddit } from "@/sanity/lib/subreddits/createSubreddit";
+import { getUser } from "@/sanity/lib/user/getUser";
+
 
 export type ImageData = {
     base64: string;
@@ -17,6 +20,29 @@ export async function createCommunity(
 ){
     try {
         const user = await getUser();
+        if("error" in user){
+            return {error: user.error};
+        }
+
+        // Prepare image data if provided
+        let imageData: ImageData = null;
+        if(imageBase64 && fileName && contentType){
+            imageData = {
+                base64: imageBase64,
+                fileName: fileName,
+                contentType: contentType
+            };
+        };
+
+        const result = await createSubreddit(
+            name,
+            user._id,
+            imageData,
+            slug,
+            description 
+        );
+
+        return result;
 
         
     } catch (error) {
