@@ -22,6 +22,7 @@ import Image from 'next/image';
 import { ImageIcon } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { createCommunity } from '@/action/createCommunity';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -35,7 +36,8 @@ const CreateCommunityButton = () => {
   const [imageFile,setImageFile] = useState<File | null>(null);
   const [isLoading,startTransition] = useTransition();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const [open,setOpen] = useState(true);
+  const [open,setOpen] = useState(false);
+  const router = useRouter();
 
 
    
@@ -139,6 +141,7 @@ const CreateCommunityButton = () => {
             } else if ("subreddit" in result && result.subreddit){
               setOpen(false);
               resetForm();
+              router.push(`/community/${result.subreddit.slug?.current}`)
 
               
             }
