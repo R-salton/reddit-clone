@@ -1,3 +1,5 @@
+
+
 import * as React from "react"
 import { FlameIcon, GalleryVerticalEnd, Home, Minus, Plus, TrendingUp } from "lucide-react"
 import ReddishLogo from '@/images/Reddish Logo Only.png';
@@ -73,17 +75,17 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="/">
                 <div className="text-sidebar-primary-foreground flex aspect-square items-center justify-center rounded-lg">
-                <Link href="/">
+               
                 <Image src={ReddishFull} alt="Logo" width={80} height={80} />
-                </Link>
+               
                 </div>
                 {/* <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold text-xl" style={{color: "#e2643b"}}>Reddish</span>
                   <span className=""></span>
                 </div> */}
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

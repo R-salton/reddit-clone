@@ -18,11 +18,12 @@ import React from 'react'
 import { Plus, FileTextIcon, Router } from 'lucide-react';  
 import { useState,useTransition } from 'react';
 
+
 import Image from 'next/image';
 import { ImageIcon } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { createCommunity } from '@/action/createCommunity';
-import { useRouter } from 'next/navigation';
+ import { useRouter } from 'next/navigation';
 
 
 
@@ -37,7 +38,7 @@ const CreateCommunityButton = () => {
   const [isLoading,startTransition] = useTransition();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [open,setOpen] = useState(false);
-  const router = useRouter();
+   const router = useRouter();
 
 
    

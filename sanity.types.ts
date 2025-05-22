@@ -321,6 +321,60 @@ export type User = {
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Vote | Comment | Post | Subreddit | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | User;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/lib/posts/getPost.ts
+// Variable: getAllPostsQuery
+// Query: *[_type == "post" && isDeleted == false]{        _id,        title,        "slug": slug.current,        body,        publishedAt,        "author": author->,        "subreddit": subreddit->        image,        isDeleted,        } | order(publishedAt desc)
+export type GetAllPostsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  publishedAt: string | null;
+  author: {
+    _id: string;
+    _type: "user";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    username?: string;
+    email?: string;
+    imageUrl?: string;
+    joinedAt?: string;
+    isReported?: boolean;
+  } | null;
+  subreddit: null;
+  isDeleted: boolean | null;
+}>;
+
+// Source: ./sanity/lib/subreddits/createSubreddit.ts
+// Variable: checkExistingSubredditQuery
+// Query: *[_type == "subreddit" && title == $name][0]{                        id                    }
+export type CheckExistingSubredditQueryResult = {
+  id: null;
+} | null;
+// Variable: checkExistingSubredditSlugQuery
+// Query: *[_type == "subreddit" && slug.current == $slug][0]{                            id                        }
+export type CheckExistingSubredditSlugQueryResult = {
+  id: null;
+} | null;
+
 // Source: ./sanity/lib/subreddits/subReddits.ts
 // Variable: getSubredditsQuery
 // Query: *[_type == "subreddit"]{        ...,        "slug": slug.current,        "moderator" : moderator->    } | order(createdAt desc)
@@ -362,7 +416,7 @@ export type GetSubredditsQueryResult = Array<{
 
 // Source: ./sanity/lib/user/getUser.ts
 // Variable: getExistingUserQuery
-// Query: *[_type == "user" && _id == $userId][0]
+// Query: *[_type == "user" && _id == $id][0]
 export type GetExistingUserQueryResult = {
   _id: string;
   _type: "user";
@@ -380,7 +434,10 @@ export type GetExistingUserQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"post\" && isDeleted == false]{\n        _id,\n        title,\n        \"slug\": slug.current,\n        body,\n        publishedAt,\n        \"author\": author->,\n        \"subreddit\": subreddit->\n        image,\n        isDeleted,\n        } | order(publishedAt desc)": GetAllPostsQueryResult;
+    "*[_type == \"subreddit\" && title == $name][0]{\n                        id\n                    }\n                ": CheckExistingSubredditQueryResult;
+    "*[_type == \"subreddit\" && slug.current == $slug][0]{\n                            id\n                        }\n                    ": CheckExistingSubredditSlugQueryResult;
     " *[_type == \"subreddit\"]{\n        ...,\n        \"slug\": slug.current,\n        \"moderator\" : moderator->\n    } | order(createdAt desc) ": GetSubredditsQueryResult;
-    "*[_type == \"user\" && _id == $userId][0]": GetExistingUserQueryResult;
+    "*[_type == \"user\" && _id == $id][0]": GetExistingUserQueryResult;
   }
 }

@@ -1,10 +1,12 @@
+
+'use server'
 import { sanityFetch } from "../live";
 import { defineQuery } from "groq";
 
 
-export async function getPost(slug: string) {
+export async function getPosts() {
 
-    const getAllPostsQuery = defineQuery(`*[_type == "post" && isDeleted != false]{
+    const getAllPostsQuery = defineQuery(`*[_type == "post" && isDeleted == false]{
         _id,
         title,
         "slug": slug.current,

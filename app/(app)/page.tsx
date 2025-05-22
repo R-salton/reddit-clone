@@ -1,12 +1,14 @@
-"use client";
 
-import { PostList } from "@/components/PostList/postList";
+
+
+import PostList from "@/components/Post/postList";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/nextjs";
+// import { useUser } from "@clerk/nextjs";
+
 
 
 export default function Home() {
-  const {user} = useUser();
+ 
   return (
     <>
     {/* Barnner Section */}
