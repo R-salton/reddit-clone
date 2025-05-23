@@ -9,6 +9,7 @@ async function PostList() {
    
     const posts = await getPosts();
     const user =  await currentUser();
+    console.log(posts)
   return (
     <div className='space-y-4'>
         {

@@ -1,6 +1,8 @@
 
 
 import { GetAllPostsQueryResult } from '@/sanity.types';
+import { getUserPostVoteStatus } from '@/sanity/lib/posts/getUserPostVoteStatus';
+import { getPostVotes } from '@/sanity/lib/votes/getPostVotes';
 
 
 interface PostProps {
@@ -8,7 +10,11 @@ interface PostProps {
     userId: string | null
 }
 
-function Post({post, userId}: PostProps) {
+async function Post({post, userId}: PostProps) {
+
+  const votes = await getPostVotes(post._id);
+  const vote =  await getUserPostVoteStatus(post._id,userId);
+  const comments =  await getPostComments(post._id,userId)
   return (
     <div>Post</div>
   )
